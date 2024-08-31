@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { Basket } from './components/Basket'
 import { ProductList } from './components/ProductList'
@@ -46,6 +46,14 @@ function App() {
     const bask=basket.filter(item=>item.id!=id)
       setBasket(bask)
   }
+  const [total,setTotal]=useState(0)
+  useEffect(()=>{
+    const subtotal=basket.reduce((total,item)=>total+item.price*item.count,0)
+    console.log("subtotal is updated",subtotal);
+    
+    setTotal(subtotal)
+
+  },[basket])
  return (
     <>
       <h1>Online Shop</h1>
@@ -59,6 +67,7 @@ function App() {
           addCount={addCount}
           reduceCount={reduceCount}
           removeProduct={removeProduct}
+          total={total}
         />
       </div>
     </>
